@@ -1,0 +1,45 @@
+.wrapper {
+    padding: 10px;
+}
+.registration,
+.login {
+    display: inline-block;
+    width: 45%;
+    vertical-align: top;
+}
+
+button,
+h2 {
+    margin-left: 15%;
+}
+
+h6 {
+    color: green;
+}
+
+.messages > li {
+    color: red;
+    width: 70%;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.row {
+    margin-bottom: 5px;
+}
+
+.lrg-txt {
+    font-size: 20px;
+}
+.nav-wrapper {
+    padding-left: 10px;
+}
+.message {
+    padding-left: 15px;
+}
+.comment {
+    padding-left: 25px;
+}
+.col > p {
+    font-size: 16px;
+}

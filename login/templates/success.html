@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Welcome</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico'  %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/materialize.js' %}"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h4>
+            Success! Welcome {{user.first_name}}!<a href="/logout" class="waves-effect waves-light btn right"
+                ><i class="material-icons right">arrow_back</i>Log Out</a
+            >
+        </h4>
+        <h6>Successfully registered (or logged in)!</h6>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wall_app/css/materialize.css' %}" />
+    <link rel="stylesheet" href="{% static 'wall_app/css/wall.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Wall Assignment</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico'  %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/materialize.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">CodingDojo Wall</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a class="lrg-txt">Welcome {{user.first_name}}!</a></li>
+                    <li><a href="/wall/logout" class="waves-effect waves-light btn"><i
+                                class="material-icons right">arrow_back</i>Log
+                            Out</a></li>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="row">
+            <form class="col s12" action="/wall/post_message/" method='POST'>
+                {% csrf_token %}
+                <div class="row">
+                    <h4>Post a message</h4>
+                    <div class="input-field col s12">
+                        <textarea id="post_message" name="message" class="materialize-textarea"></textarea>
+                        <label for="post_message">Write your message here!</label>
+                        <button class="btn waves-effect waves-light right" type="submit" name="action">Post a
+                            message
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% load tz %}
+        {% timezone "America/Los_Angeles" %}
+        {%for message in messages%}
+        <div class="row">
+            <div class="col s12">
+                <h5>{{message.user.first_name}} {{message.user.last_name}} - {{message.created_at}}
+                    {%if now < message.created_at and message.user.id == request.session.userid %}
+                    <a href="/wall/logout" class="waves-effect waves-light btn-small right"><i
+                            class="material-icons right">delete_forever</i>Delete Message</a>
+                    {%endif%}
+                </h5>
+                <p class="message">{{message.message}}</p>
+            </div>
+        </div>
+
+        {%for comment in comments%}
+        {%if comment.message.user.id == message.user.id and comment.message.id == message.id %}
+        <div class="row">
+            <div class="col s12">
+                <h5 class="comment">{{comment.user.first_name}} {{comment.user.last_name}} - {{comment.created_at}}</h5>
+                <p class="comment">{{comment.comment}}</p>
+            </div>
+        </div>
+        {%endif%}
+        {%endfor%}
+
+        <div class="row">
+            <form class="col s12" action="/wall/post_comment/{{message.user.id}}/{{message.id}}/" method='POST'>
+                {% csrf_token %}
+                <div class="row comment">
+                    <h5>Post a comment</h5>
+                    <div class="input-field col s12">
+                        <textarea id="post_comment" name="comment" class="materialize-textarea"></textarea>
+                        <label for="post_comment">Write your comment here!</label>
+                        <button class="btn waves-effect waves-light right" type="submit" name="action">Post a
+                            comment
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {%endfor%}
+        {% endtimezone %}
+    </div> <!-- container div -->
+</body>
+
+</html>
